@@ -1,4 +1,6 @@
 import 'package:event_vendor/screens/onboard.dart';
+import 'package:event_vendor/screens/signin.dart';
+import 'package:event_vendor/screens/signup_personalInfo.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: onboard(),
+      home: signupPersonalInfo(),
     );
   }
 }
