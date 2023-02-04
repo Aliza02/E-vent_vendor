@@ -1,4 +1,3 @@
-import 'package:dropdown_textfield/dropdown_textfield.dart';
 import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/constants/auth_method.dart';
 import 'package:flutter/material.dart';
@@ -8,19 +7,18 @@ import 'package:event_vendor/widgets/passwordfield.dart';
 import 'package:event_vendor/widgets/textformfield.dart';
 import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/widgets/numberfield.dart';
-import 'package:im_stepper/stepper.dart';
 import 'package:progress_timeline/progress_timeline.dart';
 import '../widgets/button.dart';
 import '../widgets/googlebutton.dart';
 
-class signupPersonalInfo extends StatefulWidget {
-  const signupPersonalInfo({super.key});
+class signup extends StatefulWidget {
+  const signup({super.key});
 
   @override
-  State<signupPersonalInfo> createState() => _signupPersonalInfoState();
+  State<signup> createState() => _signupState();
 }
 
-class _signupPersonalInfoState extends State<signupPersonalInfo> {
+class _signupState extends State<signup> {
   final TextEditingController fullName = TextEditingController();
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
@@ -31,7 +29,7 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
   final TextEditingController cnic = TextEditingController();
   final TextEditingController contactNumber = TextEditingController();
 
-  final mylist = [
+  final business_type = [
     'Venue',
     'Caterers',
     'Photographer',
@@ -69,38 +67,6 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
   }
 
   void validationPersonal() {
-    if (email.text.isEmpty &&
-        fullName.text.isEmpty &&
-        password.text.isEmpty &&
-        confirmPassword.text.isEmpty &&
-        businessName.text.isEmpty &&
-        businessType.text.isEmpty &&
-        businessLocation.text.isEmpty &&
-        cnic.text.isEmpty &&
-        contactNumber.text.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 50.0,
-          ),
-          content: Text(
-            'Enter Fields to Proceed',
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
-        ),
-      );
-    }
     if (fullName.text.isNotEmpty &&
         email.text.isNotEmpty &&
         password.text.isNotEmpty &&
@@ -109,6 +75,7 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
       setState(() {
         stateName = 'Business';
         progressTimeline.gotoNextStage();
+        SignUp(email: email.text, password: password.text);
       });
     }
 
@@ -137,90 +104,9 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
       );
     }
 
-    if (fullName.text.isEmpty &&
-        email.text.isNotEmpty &&
-        password.text.isNotEmpty &&
-        confirmPassword.text.isNotEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 50.0,
-          ),
-          content: Text(
-            'Enter Name to Proceed',
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
-        ),
-      );
-    }
-    if (fullName.text.isNotEmpty &&
-        email.text.isEmpty &&
-        password.text.isNotEmpty &&
-        confirmPassword.text.isNotEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 50.0,
-          ),
-          content: Text(
-            'Enter Email to Proceed',
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
-        ),
-      );
-    }
-    if (fullName.text.isNotEmpty &&
-        email.text.isNotEmpty &&
-        password.text.isEmpty &&
-        confirmPassword.text.isNotEmpty) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 50.0,
-          ),
-          content: Text(
-            'Enter Password to Proceed',
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
-        ),
-      );
-    }
-    if (fullName.text.isNotEmpty &&
-        email.text.isNotEmpty &&
-        password.text.isNotEmpty &&
+    if (fullName.text.isEmpty ||
+        email.text.isEmpty ||
+        password.text.isEmpty ||
         confirmPassword.text.isEmpty) {
       showDialog(
         context: context,
@@ -231,7 +117,7 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
             size: 50.0,
           ),
           content: Text(
-            'Enter Confirm Password to Proceed',
+            'Enter Details to Proceed',
             textAlign: TextAlign.center,
           ),
           actions: [
@@ -245,8 +131,6 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
         ),
       );
     }
-
-    print('adad');
   }
 
   Widget personalInfo(BuildContext context) {
@@ -376,6 +260,98 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
     );
   }
 
+  void validationBusiness() {
+    if (businessName.text.isEmpty &&
+        businessType.text.isEmpty &&
+        businessLocation.text.isEmpty &&
+        cnic.text.isEmpty &&
+        contactNumber.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 50.0,
+          ),
+          content: Text(
+            'Enter Fields to Proceed',
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Ok'),
+            ),
+          ],
+        ),
+      );
+    }
+    if (businessName.text.isNotEmpty &&
+        businessType.text.isNotEmpty &&
+        businessLocation.text.isNotEmpty &&
+        cnic.text.isNotEmpty &&
+        contactNumber.text.isNotEmpty) {
+      progressTimeline.gotoNextStage();
+    }
+
+    if (contactNumber.text.length < 11) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 50.0,
+          ),
+          content: Text(
+            'Enter valid contact number',
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Ok'),
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (businessName.text.isEmpty ||
+        businessType.text.isEmpty ||
+        businessLocation.text.isEmpty ||
+        cnic.text.isEmpty ||
+        contactNumber.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Icon(
+            Icons.error,
+            color: Colors.red,
+            size: 50.0,
+          ),
+          content: Text(
+            'Enter complete detail to proceed',
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Ok'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   Widget businessInfo(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
@@ -430,7 +406,7 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
                     borderSide: BorderSide.none,
                   ),
                 ),
-                items: mylist
+                items: business_type
                     .map((e) => DropdownMenuItem(
                           child: Text(e),
                           value: e,
@@ -473,14 +449,7 @@ class _signupPersonalInfoState extends State<signupPersonalInfo> {
               name: 'Create Account',
               bgColor: 0xFFFF57366,
               onPressed: () {
-                progressTimeline.gotoNextStage();
-                // SignUp(email: email.text, password: password.text);
-
-                setState(() {
-                  stateName = 'Business';
-
-                  // businessInfo(context);
-                });
+                validationBusiness();
               },
             ),
           ),
