@@ -1,9 +1,12 @@
 import 'package:event_vendor/screens/onboard.dart';
 import 'package:event_vendor/screens/signin.dart';
 import 'package:event_vendor/screens/signup_personalInfo.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

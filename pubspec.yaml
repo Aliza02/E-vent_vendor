@@ -39,6 +39,8 @@ dependencies:
   im_stepper: ^1.0.1+1
   progress_timeline: ^0.0.5
   dropdown_textfield: ^1.0.8
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.4.1
 
 dev_dependencies:
   flutter_test:

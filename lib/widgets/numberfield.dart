@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:event_vendor/constants/constant.dart';
@@ -19,6 +20,9 @@ class _numberfieldState extends State<numberfield> {
     return TextFormField(
       controller: widget.numbercontroller,
       keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ],
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
