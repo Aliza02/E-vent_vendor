@@ -1,5 +1,6 @@
 import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/constants/auth_method.dart';
+import 'package:event_vendor/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -41,6 +42,7 @@ class _signupState extends State<signup> {
   var selected = 'abc';
   late ProgressTimeline progressTimeline;
   var stateName = 'personal';
+  bool loading = false;
 
   List<SingleState> states = [
     SingleState(stateTitle: 'Personal'),
@@ -75,7 +77,6 @@ class _signupState extends State<signup> {
       setState(() {
         stateName = 'Business';
         progressTimeline.gotoNextStage();
-        SignUp(email: email.text, password: password.text);
       });
     }
 
@@ -157,6 +158,7 @@ class _signupState extends State<signup> {
             ),
           ),
           Container(
+            alignment: Alignment.center,
             width: width * 0.8,
             height: height * 0.08,
             child: progressTimeline,
@@ -294,7 +296,22 @@ class _signupState extends State<signup> {
         businessLocation.text.isNotEmpty &&
         cnic.text.isNotEmpty &&
         contactNumber.text.isNotEmpty) {
+      SignUp(
+          email: email.text,
+          password: password.text,
+          fullName: fullName.text,
+          businessName: businessName.text,
+          businessType: businessType.text,
+          businessLocation: businessLocation.text,
+          cnic: cnic.text,
+          contactNumber: contactNumber.text);
       progressTimeline.gotoNextStage();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Home(),
+        ),
+      );
     }
 
     if (contactNumber.text.length < 11) {
