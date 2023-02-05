@@ -1,3 +1,4 @@
+import 'package:event_vendor/constants/auth_method.dart';
 import 'package:event_vendor/widgets/button.dart';
 import 'package:event_vendor/widgets/googlebutton.dart';
 import 'package:event_vendor/widgets/passwordfield.dart';
@@ -23,7 +24,10 @@ class _signinState extends State<signin> {
     double width = MediaQuery.of(context).size.width;
 
     void validation() {
-      print('hello');
+      if (email.text.isNotEmpty && password.text.isNotEmpty) {
+        Signin(email: email.text, password: password.text);
+        Navigator.pushNamed(context, '/home');
+      }
     }
 
     return MaterialApp(
