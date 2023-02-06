@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class Constant {
   var font = 'averia';
+  Color progressindicator = Color(0xFFFF67864);
 }
 
 Constant constant = Constant();

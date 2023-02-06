@@ -2,6 +2,8 @@ import 'package:event_vendor/screens/onboard.dart';
 import 'package:event_vendor/screens/signin.dart';
 import 'package:event_vendor/screens/signup.dart';
 import 'package:event_vendor/screens/home.dart';
+import 'package:event_vendor/screens/test.dart';
+import 'package:event_vendor/screens/test2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +20,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      initialRoute: '/signup',
+      initialRoute: '/',
       routes: {
         '/onboard': (context) => onboard(),
         '/signin': (context) => signin(),
-        '/signup': (context) => signup(),
+        '/': (context) => signup(),
         '/home': (context) => Home(),
       },
       debugShowCheckedModeBanner: false,
