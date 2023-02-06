@@ -39,13 +39,6 @@ Future Signin({required String email, required String password}) async {
     UserCredential userCredential =
         await auth.signInWithEmailAndPassword(email: email, password: password);
     User user = userCredential.user!;
-    // if(user!=null){
-    //   firestore.collection('users').doc(user.uid).set({
-    //     'email':email,
-    //     'uid':user.uid,
-    //     'password':password,
-    //   });
-    // }
   } on FirebaseAuthException catch (e) {
     print(e.message);
   }
