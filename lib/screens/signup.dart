@@ -27,127 +27,67 @@ class _signupState extends State<signup> {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final TextEditingController confirmPassword = TextEditingController();
-  final TextEditingController businessName = TextEditingController();
-  final TextEditingController businessType = TextEditingController();
-  final TextEditingController businessLocation = TextEditingController();
-  final TextEditingController cnic = TextEditingController();
-  final TextEditingController contactNumber = TextEditingController();
 
-  final business_type = [
-    'Venue',
-    'Caterers',
-    'Photographer',
-    'Florist',
-    'Card Printing',
-    'Decorators',
-    'Others',
-  ];
-  var selected = 'abc';
-  // late ProgressTimeline progressTimeline;
-  // var stateName = 'personal';
-
-  // List<SingleState> states = [
-  //   SingleState(stateTitle: 'Personal'),
-  //   SingleState(stateTitle: 'Business'),
-  //   SingleState(stateTitle: 'Sign Up'),
-  // ];
-
-  void initState() {
-    // progressTimeline = ProgressTimeline(
-    //   states: states,
-    //   iconSize: 25.0,
-    //   checkedIcon: Icon(Icons.check_circle, color: Colors.orange[700]),
-    //   connectorColor: Colors.grey[300],
-    //   connectorWidth: 3.0,
-    //   connectorLength: 100.0,
-    //   currentIcon: Icon(Icons.circle, color: Colors.orange[700]),
-    //   uncheckedIcon: Icon(
-    //     Icons.circle_outlined,
-    //     color: Colors.orange[700],
-    //   ),
-    // );
-
-    super.initState();
+  void showErrormessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Icon(
+          Icons.error,
+          color: Colors.red,
+          size: 50.0,
+        ),
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Ok'),
+          ),
+        ],
+      ),
+    );
   }
 
   void validationPersonal() {
-    // if (fullName.text.isNotEmpty &&
-    //     email.text.isNotEmpty &&
-    //     password.text.isNotEmpty &&
-    //     confirmPassword.text.isNotEmpty &&
-    //     password.text == confirmPassword.text) {
-
-    // businessInfo(context);
-    currentindex += 1;
-    print(currentindex);
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => business_signup(
-          userName: fullName.text,
-          email: email.text,
-          password: password.text,
-        ),
-      ),
-    );
-    // setState(() {
-    //   stateName = 'Business';
-    //   progressTimeline.gotoNextStage();
-    // });
-    // }
-
-    if (password.text != confirmPassword.text) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 50.0,
+    if (fullName.text.isNotEmpty &&
+        email.text.isNotEmpty &&
+        password.text.isNotEmpty &&
+        confirmPassword.text.isNotEmpty &&
+        password.text == confirmPassword.text) {
+      currentindex += 1;
+      print(currentindex);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => business_signup(
+            userName: fullName.text,
+            email: email.text,
+            password: password.text,
           ),
-          content: Text(
-            'Password and Confirm Password does not match',
-            textAlign: TextAlign.center,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('Ok'),
-            ),
-          ],
         ),
       );
+      currentindex = 0;
     }
 
-    // if (fullName.text.isEmpty ||
-    //     email.text.isEmpty ||
-    //     password.text.isEmpty ||
-    //     confirmPassword.text.isEmpty) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertDialog(
-    //       title: Icon(
-    //         Icons.error,
-    //         color: Colors.red,
-    //         size: 50.0,
-    //       ),
-    //       content: Text(
-    //         'Enter Details to Proceed',
-    //         textAlign: TextAlign.center,
-    //       ),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //           child: Text('Ok'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
+    if (password.text != confirmPassword.text &&
+        fullName.text.isNotEmpty &&
+        email.text.isNotEmpty &&
+        password.text.isNotEmpty &&
+        confirmPassword.text.isNotEmpty) {
+      showErrormessage('Password and Confirm Password does not match');
+    }
+
+    if (fullName.text.isEmpty ||
+        email.text.isEmpty ||
+        password.text.isEmpty ||
+        confirmPassword.text.isEmpty) {
+      showErrormessage('Enter Details to Proceed');
+    }
   }
 
   int currentindex = 0;
