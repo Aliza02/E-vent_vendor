@@ -12,8 +12,13 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text("dasdada"),
+    return MaterialApp(
+      home: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Text("dasdada"),
+        ),
+      ),
     );
   }
 }

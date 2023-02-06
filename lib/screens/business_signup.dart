@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/constants/auth_method.dart';
 import 'package:event_vendor/screens/home.dart';
-// import 'package:event_vendor/widgets/progress_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,13 +9,17 @@ import 'package:event_vendor/widgets/passwordfield.dart';
 import 'package:event_vendor/widgets/textformfield.dart';
 import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/widgets/numberfield.dart';
-import 'package:progress_timeline/progress_timeline.dart';
 import '../widgets/progressbar.dart';
 import '../widgets/button.dart';
 import '../widgets/googlebutton.dart';
 
 class business_signup extends StatefulWidget {
-  const business_signup({super.key});
+  String userName, email, password;
+  business_signup(
+      {super.key,
+      required this.userName,
+      required this.email,
+      required this.password});
 
   @override
   State<business_signup> createState() => _business_signupState();
@@ -28,6 +31,33 @@ class _business_signupState extends State<business_signup> {
   final TextEditingController businessLocation = TextEditingController();
   final TextEditingController cnic = TextEditingController();
   final TextEditingController contactNumber = TextEditingController();
+  var selected;
+  int currentindex = 1;
+
+  void showErrormessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Icon(
+          Icons.error,
+          color: Colors.red,
+          size: 50.0,
+        ),
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
 
   final business_type = [
     'Venue',
@@ -38,168 +68,41 @@ class _business_signupState extends State<business_signup> {
     'Decorators',
     'Others',
   ];
-  var selected = 'abc';
-  // late ProgressTimeline progressTimeline;
-  // List<SingleState> states = [
-  //   SingleState(stateTitle: 'Personal'),
-  //   SingleState(stateTitle: 'Business'),
-  //   SingleState(stateTitle: 'Sign Up'),
-  // ];
 
-  // void statefunction() {
-  //   progressTimeline.gotoNextStage();
-  // }
-
-  // void initState() {
-  //   progressTimeline = ProgressTimeline(
-  //     states: states,
-  //     iconSize: 25.0,
-  //     checkedIcon: Icon(Icons.check_circle, color: Colors.orange[700]),
-  //     connectorColor: Colors.grey[300],
-  //     connectorWidth: 3.0,
-  //     connectorLength: 100.0,
-  //     currentIcon: Icon(Icons.circle, color: Colors.orange[700]),
-  //     uncheckedIcon: Icon(
-  //       Icons.circle_outlined,
-  //       color: Colors.orange[700],
-  //     ),
-  //   );
-
-  //   super.initState();
-  // }
-  int currentindex = 1;
   void validationBusiness() {
-    // if (businessName.text.isEmpty &&
-    //     businessType.text.isEmpty &&
-    //     businessLocation.text.isEmpty &&
-    //     cnic.text.isEmpty &&
-    //     contactNumber.text.isEmpty) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertDialog(
-    //       title: Icon(
-    //         Icons.error,
-    //         color: Colors.red,
-    //         size: 50.0,
-    //       ),
-    //       content: Text(
-    //         'Enter Fields to Proceed',
-    //         textAlign: TextAlign.center,
-    //       ),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //           child: Text('Ok'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-    // if (businessName.text.isNotEmpty &&
-    //     businessType.text.isNotEmpty &&
-    //     businessLocation.text.isNotEmpty &&
-    //     cnic.text.isNotEmpty &&
-    //     contactNumber.text.isNotEmpty) {
-    // SignUp(
-    //     email: email.text,
-    //     password: password.text,
-    //     fullName: fullName.text,
-    //     businessName: businessName.text,
-    //     businessType: businessType.text,
-    //     businessLocation: businessLocation.text,
-    //     cnic: cnic.text,
-    //     contactNumber: contactNumber.text);
-    currentindex += 1;
-    print(currentindex);
-    if (currentindex == 2) {
-      currentindex = 3;
-      print(currentindex);
-      showDialog(
-          context: context,
-          builder: ((context) => AlertDialog(
-                title: Icon(
-                  Icons.error,
-                  color: Colors.red,
-                  size: 50.0,
-                ),
-                content: Text(
-                  'Enter Fields to Proceed',
-                  textAlign: TextAlign.center,
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      // Navigator.pop(context);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Home(),
-                        ),
-                      );
-                    },
-                    child: Text('Ok'),
-                  ),
-                ],
-              )));
+    if (businessName.text.isNotEmpty &&
+        businessType.text.isNotEmpty &&
+        businessLocation.text.isNotEmpty &&
+        cnic.text.isNotEmpty &&
+        contactNumber.text.isNotEmpty) {
+      currentindex += 1;
+
+      SignUp(
+          email: widget.email,
+          password: widget.password,
+          fullName: widget.userName,
+          businessName: businessName.text,
+          businessType: businessType.text,
+          businessLocation: businessLocation.text,
+          cnic: cnic.text,
+          contactNumber: contactNumber.text);
     }
 
-    // }
+    if (contactNumber.text.length < 11 &&
+        businessName.text.isNotEmpty &&
+        businessType.text.isNotEmpty &&
+        businessLocation.text.isNotEmpty &&
+        cnic.text.isNotEmpty) {
+      showErrormessage('Enter valid contact number');
+    }
 
-    // if (contactNumber.text.length < 11) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertDialog(
-    //       title: Icon(
-    //         Icons.error,
-    //         color: Colors.red,
-    //         size: 50.0,
-    //       ),
-    //       content: Text(
-    //         'Enter valid contact number',
-    //         textAlign: TextAlign.center,
-    //       ),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //           child: Text('Ok'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
-
-    // if (businessName.text.isEmpty ||
-    //     businessType.text.isEmpty ||
-    //     businessLocation.text.isEmpty ||
-    //     cnic.text.isEmpty ||
-    //     contactNumber.text.isEmpty) {
-    //   showDialog(
-    //     context: context,
-    //     builder: (context) => AlertDialog(
-    //       title: Icon(
-    //         Icons.error,
-    //         color: Colors.red,
-    //         size: 50.0,
-    //       ),
-    //       content: Text(
-    //         'Enter complete detail to proceed',
-    //         textAlign: TextAlign.center,
-    //       ),
-    //       actions: [
-    //         TextButton(
-    //           onPressed: () {
-    //             Navigator.pop(context);
-    //           },
-    //           child: Text('Ok'),
-    //         ),
-    //       ],
-    //     ),
-    //   );
-    // }
+    if (businessName.text.isEmpty ||
+        businessType.text.isEmpty ||
+        businessLocation.text.isEmpty ||
+        cnic.text.isEmpty ||
+        contactNumber.text.isEmpty) {
+      showErrormessage('Enter complete detail to proceed');
+    }
   }
 
   @override

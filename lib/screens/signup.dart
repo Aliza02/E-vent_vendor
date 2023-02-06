@@ -83,7 +83,11 @@ class _signupState extends State<signup> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => business_signup(),
+        builder: (context) => business_signup(
+          userName: fullName.text,
+          email: email.text,
+          password: password.text,
+        ),
       ),
     );
     // setState(() {
