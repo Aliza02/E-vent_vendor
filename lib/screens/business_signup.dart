@@ -105,7 +105,8 @@ class _business_signupState extends State<business_signup> {
           Navigator.pushNamed(context, '/home');
         }
       } on FirebaseAuthException catch (e) {
-        print(e.message);
+        showErrormessage(e.message.toString());
+        // print(e.message);
       }
 
       currentindex = 0;
