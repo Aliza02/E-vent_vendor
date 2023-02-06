@@ -18,6 +18,32 @@ class signin extends StatefulWidget {
 class _signinState extends State<signin> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  void showErrormessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Icon(
+          Icons.error,
+          color: Colors.red,
+          size: 50.0,
+        ),
+        content: Text(
+          message,
+          textAlign: TextAlign.center,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('Ok'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -27,6 +53,9 @@ class _signinState extends State<signin> {
       if (email.text.isNotEmpty && password.text.isNotEmpty) {
         Signin(email: email.text, password: password.text);
         Navigator.pushNamed(context, '/home');
+      }
+      if (email.text.isEmpty | password.text.isEmpty) {
+        showErrormessage('Enter Credentials to proceed');
       }
     }
 

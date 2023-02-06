@@ -77,15 +77,15 @@ class _business_signupState extends State<business_signup> {
         contactNumber.text.isNotEmpty) {
       currentindex += 1;
 
-      // SignUp(
-      //     email: widget.email,
-      //     password: widget.password,
-      //     fullName: widget.userName,
-      //     businessName: businessName.text,
-      //     businessType: businessType.text,
-      //     businessLocation: businessLocation.text,
-      //     cnic: cnic.text,
-      //     contactNumber: contactNumber.text);
+      SignUp(
+          email: widget.email,
+          password: widget.password,
+          fullName: widget.userName,
+          businessName: businessName.text,
+          businessType: businessType.text,
+          businessLocation: businessLocation.text,
+          cnic: cnic.text,
+          contactNumber: contactNumber.text);
       Navigator.pushNamed(context, '/home');
       currentindex = 0;
     }
