@@ -2,6 +2,7 @@ import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/constants/auth_method.dart';
 import 'package:event_vendor/screens/business_signup.dart';
 import 'package:event_vendor/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:event_vendor/widgets/progress_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -10,6 +11,7 @@ import 'package:event_vendor/widgets/passwordfield.dart';
 import 'package:event_vendor/widgets/textformfield.dart';
 import 'package:event_vendor/constants/constant.dart';
 import 'package:event_vendor/widgets/numberfield.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:progress_timeline/progress_timeline.dart';
 import '../widgets/progressbar.dart';
 import '../widgets/button.dart';
@@ -51,6 +53,22 @@ class _signupState extends State<signup> {
         ],
       ),
     );
+  }
+
+  signinwithGoogle() async {
+    final GoogleSignInAccount? googleuser = await GoogleSignIn().signIn();
+    final GoogleSignInAuthentication googleauth =
+        await googleuser!.authentication;
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleauth.accessToken,
+      idToken: googleauth.idToken,
+    );
+
+    UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+    if (userCredential.user != null) {
+      Navigator.pushNamed(context, '/home');
+    }
   }
 
   void validationPersonal() {
@@ -176,13 +194,15 @@ class _signupState extends State<signup> {
               ),
             ),
           ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0.0, height * 0.0, 0.0, 0.0),
-            alignment: Alignment.center,
-            child: GoogleButton(
-              name: 'Continue with Google',
-              bgColor: 0xFFFFFFFFF,
-              onPressed: validationPersonal,
+          GestureDetector(
+            onTap: signinwithGoogle,
+            child: Container(
+              margin: EdgeInsets.fromLTRB(0.0, height * 0.0, 0.0, 0.0),
+              alignment: Alignment.center,
+              child: GoogleButton(
+                name: 'Continue with Google',
+                bgColor: 0xFFFFFFFFF,
+              ),
             ),
           ),
           Container(
