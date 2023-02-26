@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../constants/auth_method.dart';
 
@@ -20,10 +22,12 @@ class _HomeState extends State<Home> {
             backgroundColor: Colors.white,
             body: ElevatedButton(
                 onPressed: () {
+                  GoogleSignIn().signOut();
                   Signout();
                   Navigator.pop(context);
                 },
-                child: Text('click'))),
+                child: Text(FirebaseAuth.instance.currentUser!.displayName
+                    .toString()))),
       ),
     );
   }

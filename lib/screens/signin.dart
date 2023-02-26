@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class signin extends StatefulWidget {
   const signin({super.key});
@@ -78,6 +79,22 @@ class _signinState extends State<signin> {
       }
       email.clear();
       password.clear();
+    }
+
+    signinwithGoogle() async {
+      final GoogleSignInAccount? googleuser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleauth =
+          await googleuser!.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleauth.accessToken,
+        idToken: googleauth.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      if (userCredential.user != null) {
+        Navigator.pushNamed(context, '/home');
+      }
     }
 
     return MaterialApp(
@@ -170,13 +187,16 @@ class _signinState extends State<signin> {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
-                    alignment: Alignment.center,
-                    child: GoogleButton(
+                  GestureDetector(
+                    onTap: signinwithGoogle,
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(0.0, height * 0.02, 0.0, 0.0),
+                      alignment: Alignment.center,
+                      child: GoogleButton(
                         name: 'Login with Google',
                         bgColor: 0xFFFFFFFFF,
-                        onPressed: validation),
+                      ),
+                    ),
                   ),
                   Container(
                     alignment: Alignment.center,

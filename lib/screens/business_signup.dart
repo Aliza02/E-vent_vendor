@@ -106,7 +106,6 @@ class _business_signupState extends State<business_signup> {
         }
       } on FirebaseAuthException catch (e) {
         showErrormessage(e.message.toString());
-        // print(e.message);
       }
 
       currentindex = 0;

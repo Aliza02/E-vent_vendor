@@ -6,10 +6,8 @@ import 'package:flutter/src/widgets/framework.dart';
 class GoogleButton extends StatelessWidget {
   String name;
   int bgColor;
-  final Function onPressed;
 
-  GoogleButton(
-      {required this.name, required this.bgColor, required this.onPressed});
+  GoogleButton({required this.name, required this.bgColor});
 
   @override
   Widget build(BuildContext context) {

@@ -158,7 +158,9 @@ class _onboardState extends State<onboard> {
                                 borderRadius: BorderRadius.circular(25.0),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/signin');
+                            },
                             child: Text(
                               'Get Your first order',
                               style: TextStyle(
